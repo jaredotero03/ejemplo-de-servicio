@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+ <link rel="stylesheet" href="bootstrap.css">
+  <title>Servicio que recibe y devuelve JSON</title>
+
+<nav class="navbar" style="background-color: #9EFFA6">
+  <div class="container-fluid">
+    <h5 class="navbar-brand" style="color:#3884FF">
+      <img src="logo UTN sin fondo.webp" alt="Logo" width="40" height="34" class="d-inline-block align-text-top">
+      Servicio que recibe y devuelve JSON
+    </div>
+  </div>
+</nav>
+
+</head>
+
+<body>
+<br>
+ <p><button id="boton" class="btn btn-primary">Envía y recibe JSON</button></p>
+
+ <script type="module">
+
+  import { consume } from "./libclienteweb/consume.js"
+  import { enviaJsonRecibeJson } from "./libclienteweb/enviaJsonRecibeJson.js"
+  import { muestraError } from "./libclienteweb/muestraError.js"
+
+  boton.addEventListener("click", procesaJson)
+
+  async function procesaJson() {
+   try {
+    const nombres = [
+     "Avila Peralta Diego Rafael",
+     "Cervante Miguel Isaí",
+     "Contreras Gamma Tadeo Habith",
+     "Gonzalez Rivera Axel",
+     "Guzman Sanchez Luis Enrique",
+     "Ortega Maldonado Rodrigo",
+     "Otero Guzman Johan Jared",
+     "Perez Arellano Ariana",
+     "Ramirez López Marilú",
+     "Tabarez López Héctor Jesús",
+     "Trejo Garrido Angel Gallagert"
+    ]
+    const datos = {
+     saludo: "Hola",
+     nombre: nombres.join(", ")
+    }
+    const respuesta = await consume(
+     enviaJsonRecibeJson(
+      "api/json.php", datos))
+    const json =
+     await respuesta.json()
+    alert(json)
+   } catch (error) {
+    muestraError(error)
+   }
+  }
+
+ </script>
+
+</body>
+
+</html>
