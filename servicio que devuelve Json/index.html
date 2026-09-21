@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+ <link rel="stylesheet" href="bootstrap.css">
+ <title>Servicio que devuelve JSON</title>
+
+
+<nav class="navbar" style="background-color: #9EFFA6">
+  <div class="container-fluid">
+    <h5 class="navbar-brand" style="color:#3884FF">
+      <img src="logo UTN sin fondo.webp" alt="Logo" width="40" height="34" class="d-inline-block align-text-top">
+      Servicio que devuelve JSON
+    </div>
+  </div>
+</nav>
+
+
+</head>
+
+<body>
+<br>
+ <p><button id="boton" class="btn btn-primary">Recupera datos</button></p>
+
+ <script type="module">
+
+  import { consume } from "./libclienteweb/consume.js"
+  import { recibeJson } from "./libclienteweb/recibeJson.js"
+  import { muestraError } from "./libclienteweb/muestraError.js"
+
+  boton.addEventListener("click", recibeDatos)
+
+  async function recibeDatos() {
+   try {
+    const respuesta = await consume(
+     recibeJson("api/devuelve.php"))
+    const json =
+     await respuesta.json()
+    alert(
+     `Mensaje: ${json.mensaje}
+Nombre: ${json.nombre}`)
+   } catch (error) {
+    muestraError(error)
+   }
+  }
+
+ </script>
+
+</body>
+
+</html>
