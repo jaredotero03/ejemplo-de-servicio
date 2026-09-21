@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+ <link rel="stylesheet" href="bootstrap.css">
+
+ <title>Servicio que valida datos</title>
+
+ <script type="module" src="libclienteweb/manejaErrores.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar" style="background-color: #9EFFA6">
+  <div class="container-fluid">
+    <h5 class="navbar-brand" style="color:#3884FF">
+      <img src="logo UTN sin fondo.webp" alt="Logo" width="40" height="34" class="d-inline-block align-text-top">
+      Servicio que valida datos
+    </div>
+  </div>
+</nav>
+
+ <form id="formulario">
+
+  <p>
+   <label>
+    Saludo:
+    <!-- Como este input tiene name="saludo", su valor se recupera en el
+     servidor con recibeTexto("saludo") -->
+    <input name="saludo">
+   </label>
+  </p>
+
+  <p>
+   <label>
+    Nombre:
+    <!-- Como este input tiene name="nombre", su valor se recupera en el
+     servidor con recibeTexto("nombre") -->
+    <input name="nombre">
+   </label>
+  </p>
+
+  <p><button type="submit">Procesa</button></p>
+
+ </form>
+
+ <footer style="text-align: center; margin-top: 40px;">
+  <h2>901-M</h2>
+  <h3>BIG DATA</h3>
+  <p>
+   Avila Peralta Diego Rafael<br>
+   Carvente Miguel Isai<br>
+   Contreras Gama Tadeo Habith<br>
+   Gonzalez Rivera Axel<br>
+   Guzman Sanchez luis Enrique<br>
+   Ortega Maldonado Rodrigo<br>
+   Otero Guzman Johan Jared<br>
+   Perez Arellano Ariana<br>
+   Ramirez Lopez Marilu<br>
+   Tabarez Lopez Hector Jesus<br>
+   Trejo Garrido Angel Gallagert
+  </p>
+ </footer>
+
+ <script type="module">
+
+  import { consume } from "./libclienteweb/consume.js"
+  import { submitFormRecibeJson } from "./libclienteweb/submitFormRecibeJson.js"
+
+  formulario.addEventListener("submit", submit)
+
+  /**
+   * @param {Event} event
+   */
+  async function submit(event) {
+   event.preventDefault()
+   const respuesta = await consume(
+    submitFormRecibeJson(
+     "api/valida.php", formulario))
+   const json =
+    await respuesta.json()
+   alert(json)
+  }
+
+ </script>
+
+</body>
+
+</html>
