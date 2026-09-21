@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+ <link rel="stylesheet" href="bootstrap.css">
+
+ <title>Servicio que procesa un formulario</title>
+
+</head>
+
+<body>
+
+ <h1>Servicio que procesa un formulario</h1>
+
+ <form id="formulario">
+
+  <p>
+   <label>
+    Saludo:
+    <!-- Como este input tiene name="saludo", su valor se recupera en el
+     servidor con recibeTexto("saludo") -->
+    <input name="saludo">
+   </label>
+  </p>
+
+  <p>
+   <label>
+    Nombre:
+    <!-- Como este input tiene name="nombre", su valor se recupera en el
+     servidor con recibeTexto("nombre") -->
+    <input name="nombre">
+   </label>
+  </p>
+
+  <p><button type="submit">Procesa</button></p>
+
+ </form>
+
+ <script type="module">
+
+  import { consume } from "./libclienteweb/consume.js"
+  import { submitFormRecibeJson } from "./libclienteweb/submitFormRecibeJson.js"
+  import { muestraError } from "./libclienteweb/muestraError.js"
+
+  formulario.addEventListener("submit", submit)
+
+  /**
+   * @param {Event} event
+   */
+  async function submit(event) {
+   try {
+    event.preventDefault()
+    const respuesta = await consume(
+     submitFormRecibeJson(
+      "api/procesa.php", formulario))
+    const json =
+     await respuesta.json()
+    alert(json)
+   } catch (error) {
+    muestraError(error)
+   }
+  }
+
+ </script>
+
+</body>
+
+</html>
