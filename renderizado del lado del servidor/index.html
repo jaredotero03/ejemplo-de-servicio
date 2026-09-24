@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+
+ <title>Render en el servidor</title>
+
+ <script src="dompurify/purify.min.js"></script>
+ <script type="module" src="libclienteweb/manejaErrores.js"></script>
+ <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+ <h1>Render en el servidor</h1>
+
+ <dl id="lista">
+  <dt>Cargando&hellip;</dt>
+  <dd><progress max="100">Cargando&hellip;</progress></dd>
+ </dl>
+
+ <script type="module">
+
+  import { consume } from "./libclienteweb/consume.js"
+  import { recibeJson } from "./libclienteweb/recibeJson.js"
+  import { muestraObjeto } from "./libclienteweb/muestraObjeto.js"
+
+  descargaDatos()
+
+  async function descargaDatos() {
+   const respuesta = await consume(recibeJson("api/render.php"))
+   const json = await respuesta.json()
+   muestraObjeto(document, json)
+  }
+
+ </script>
+
+</body>
+
+</html>
